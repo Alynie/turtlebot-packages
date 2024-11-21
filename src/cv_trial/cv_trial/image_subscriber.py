@@ -27,6 +27,7 @@ class ImageSubscriber(Node):
         print('== Finish Detected ==')
 
 def main(args=None):
+    print('Starting Subscriber Node')
     rclpy.init(args=args)
     node = ImageSubscriber()
     try:
