@@ -12,8 +12,7 @@
   <depend>cv_bridge</depend>
   <depend>sensor_msgs</depend>
   <depend>std_msgs</depend>
-  <depend>opencv2</depend>
-  <depend>cv2</depend>
+  <depend>opencv-python</depend>
 
   <export>
     <build_type>ament_python</build_type>
