@@ -16,7 +16,7 @@ class MinimalSubscriber(Node):
     def listener_callback(self, msg):
         self.get_logger().info('I heard: "%s"' % msg.data)
 
-def main(args=None)
+def main(args=None):
     rclpy.init(args=args)
 
     minimal_subscriber = MinimalSubscriber()
