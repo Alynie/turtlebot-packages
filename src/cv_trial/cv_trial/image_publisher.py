@@ -31,8 +31,8 @@ class ImagePublisher(Node):
             self.image_publisher.publish(self.br.cv2_to_imgmsg(frame, encoding="bgr8"))
             self.count += 1
 
-    def main(args=args):
-        rclpy.main(args=None)
+    def main(args=None):
+        rclpy.main(args=args)
         node = ImagePublisher()
         try:
             rclpy.spin(node)

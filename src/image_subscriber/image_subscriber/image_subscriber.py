@@ -5,6 +5,7 @@ from std_msgs.msg import String, Bool
 from sensor_msgs.msg import Image
 import cv2
 from cv_bridge import CvBridge
+import numpy as np
 
 class ImageSubscriber(Node):
     
@@ -23,7 +24,17 @@ class ImageSubscriber(Node):
         msg = String()
         self.count+=1 
         current_frame = self.br.imgmsg_to_cv2(data)
-        cv2.write("img" + str(self.count)+".jpg", current_frame)
+        name = "img" + str(self.count)+".jpg"
+        print('== Press s to save or esc to exit ==')
+        cv2.imshow('image',current_frame)
+        k = cv2.waitKey(0)
+        if k == 27:         # wait for ESC key to exit
+            cv2.destroyAllWindows()
+            print('== Exited without saving ==')
+        elif k == ord('s'): # wait for 's' key to save and exit
+            cv2.imwrite(name, current_frame)
+            cv2.destroyAllWindows()
+            print(f"== {name} saved ==")
         print('== Finish Detected ==')
 
 def main(args=None):
