@@ -3,18 +3,17 @@ from rclpy.node import Node
 from std_msgs.msg import String
 
 class MinimalSubscriber(Node):
-    
     def __init__(self):
         super().__init__('minimal_subscriber')
-        self.subscription = self.create_subscription(
-            String,
-            'topic',
-            self.listener_callback,
-            10)
+        print("init")
+        self.subscription = self.create_subscription(String, 'topic', self.listener_callback, 10)
         self.subscription #prevent unused variable warning
+        print("init end")
 
     def listener_callback(self, msg):
+        print("callback")
         self.get_logger().info('I heard: "%s"' % msg.data)
+        print('I heard: "%s"' % msg.data)
 
 def main(args=None):
     rclpy.init(args=args)
