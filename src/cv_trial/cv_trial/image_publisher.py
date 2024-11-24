@@ -33,7 +33,7 @@ class ImagePublisher(Node):
 
 def main(args=None):
     print('== Publisher Started ==')
-    rclpy.main(args=args)
+    rclpy.init(args=args)
     node = ImagePublisher()
     try:
         rclpy.spin(node)
