@@ -31,19 +31,17 @@ class ImagePublisher(Node):
             self.image_publisher.publish(self.br.cv2_to_imgmsg(frame, encoding="bgr8"))
             self.count += 1
 
-    def main(args=None):
-        rclpy.main(args=args)
-        node = ImagePublisher()
-        try:
-            rclpy.spin(node)
-        except KeyboardInterrupt:
-            node.get_logger().info('Keyboard Interrupt (SIGINT)')
-        finally:
-            node.cam.release()
-            node.destroy_node()
-            rclpy.shutdown()
-
-    if __name__ == '__main__':
-        main()
-
-    
+def main(args=None):
+    print('== Publisher Started ==')
+    rclpy.main(args=args)
+    node = ImagePublisher()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        node.get_logger().info('Keyboard Interrupt (SIGINT)')
+    finally:
+        node.cam.release()
+        node.destroy_node()
+        rclpy.shutdown()
+if __name__ == '__main__':
+    main()
