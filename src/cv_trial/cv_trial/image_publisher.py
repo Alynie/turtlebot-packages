@@ -12,6 +12,7 @@ class ImagePublisher(Node):
 
     def __init__(self):
         super().__init__('image_publisher')
+        print("init")
         qos_profile = QoSProfile(depth = 1)
         self.image_publisher = self.create_publisher(Image, 'video_frames', qos_profile)
         self.count = 0
@@ -21,12 +22,16 @@ class ImagePublisher(Node):
             raise Exception("Camera open failed!")
         self.br = CvBridge()
         self.publish_timer = self.create_timer(1, self.publish_images)
+        print("init end")
 
     def publish_images(self):
+        print("inside publish_images")
         ret, frame = self.cam.read()
         if not ret:
             self.get_logger().info("Image read failed!")
+            print("Image read failed!")
         else:
+            print("writing file")
             cv2.imwrite("img"+str(self.count)+".jpg", frame)
             self.image_publisher.publish(self.br.cv2_to_imgmsg(frame, encoding="bgr8"))
             self.count += 1
