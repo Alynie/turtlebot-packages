@@ -33,7 +33,7 @@ class ImagePublisher(Node):
         else:
             print("writing file")
             cv2.imwrite("images/img"+str(self.count)+".jpg", frame)
-            self.image_publisher.publish(self.br.cv2_to_imgmsg(frame, encoding="bgr8"))
+            self.image_publisher.publish(self.br.cv2_to_imgmsg(frame, encoding="mono8"))
             self.count += 1
 
 def main(args=None):
