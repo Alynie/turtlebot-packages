@@ -21,7 +21,21 @@ class ImagePublisher(Node):
         if not self.cam.isOpened():
             raise Exception("Camera open failed!")
         self.br = CvBridge()
-        self.publish_timer = self.create_timer(30, self.publish_images)
+        # self.publish_timer = self.create_timer(30, self.publish_images)
+        while True:
+            print('== Press s to save or esc to exit ==')
+            cv2.imshow('image',current_frame)
+            k = cv2.waitKey(0)
+            if k == 27:         # wait for ESC key to exit
+                cv2.destroyAllWindows()
+                print('== Exited without saving ==')
+            elif k == ord('s'): # wait for 's' key to save and exit
+                self.publish_images
+                cv2.destroyAllWindows()
+                print(f"== {name} saved ==")
+            elif k == ord('q'):
+                break
+            print('== Finish Detected ==')
         print("init end")
 
     def publish_images(self):
@@ -33,7 +47,7 @@ class ImagePublisher(Node):
         else:
             print("writing file")
             cv2.imwrite("images/img"+str(self.count)+".jpg", frame)
-            self.image_publisher.publish(self.br.cv2_to_imgmsg(frame, encoding="mono8"))
+            self.image_publisher.publish(self.br.cv2_to_imgmsg(frame, encoding="bgr8"))
             self.count += 1
 
 def main(args=None):
