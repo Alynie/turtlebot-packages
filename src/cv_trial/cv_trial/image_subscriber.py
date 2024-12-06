@@ -23,17 +23,7 @@ class ImageSubscriber(Node):
         msg = String()
         self.count+=1 
         current_frame = self.br.imgmsg_to_cv2(data)
-        name = "img" + str(self.count)+".jpg"
-        print('== Press s to save or esc to exit ==')
-        cv2.imshow('image',current_frame)
-        k = cv2.waitKey(0)
-        if k == 27:         # wait for ESC key to exit
-            cv2.destroyAllWindows()
-            print('== Exited without saving ==')
-        elif k == ord('s'): # wait for 's' key to save and exit
-            cv2.imwrite(name, current_frame)
-            cv2.destroyAllWindows()
-            print(f"== {name} saved ==")
+        cv2.imwrite("img" + str(self.count)+".jpg", current_frame)
         print('== Finish Detected ==')
 
 def main(args=None):
