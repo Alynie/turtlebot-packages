@@ -23,7 +23,7 @@ class ImageSubscriber(Node):
     def listener_callback(self, data):
         msg = String()
         self.count+=1 
-        current_frame = self.br.imgmsg_to_cv2(data)
+        current_frame = self.br.imgmsg_to_cv2(data, encoding="mono8")
         name = "img" + str(self.count)+".jpg"
         print('== Press s to save or esc to exit ==')
         cv2.imshow('image',current_frame)
