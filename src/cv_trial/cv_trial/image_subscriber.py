@@ -23,7 +23,7 @@ class ImageSubscriber(Node):
         msg = String()
         self.count+=1 
         current_frame = self.br.imgmsg_to_cv2(data)
-        cv2.imwrite("img" + str(self.count)+".jpg", current_frame)
+        cv2.imwrite("images/img" + str(self.count)+".jpg", current_frame)
         print('== Finish Detected ==')
 
 def main(args=None):
