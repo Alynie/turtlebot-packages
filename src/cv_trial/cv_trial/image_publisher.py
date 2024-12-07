@@ -32,7 +32,7 @@ class ImagePublisher(Node):
             print("Image read failed!")
         else:
             print("writing file")
-            # cv2.imwrite("images/img"+str(self.count)+".jpg", frame) # might be writing to turtlebot too
+            cv2.imwrite("images/img"+str(self.count)+".jpg", frame)
             self.image_publisher.publish(self.br.cv2_to_imgmsg(frame, encoding="bgr8"))
             self.count += 1
 
