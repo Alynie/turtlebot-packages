@@ -15,7 +15,7 @@ class ImageSubscriber(Node):
             Image,
             'video_frames',
             self.listener_callback,
-            qos_profile)
+            1)
         self.br = CvBridge()
         self.count = 0
     

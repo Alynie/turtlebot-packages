@@ -14,7 +14,7 @@ class ImagePublisher(Node):
         super().__init__('image_publisher')
         print("init")
         qos_profile = QoSProfile(depth = 1)
-        self.publisher = self.create_publisher(Image, 'video_frames', qos_profile)
+        self.publisher = self.create_publisher(Image, 'video_frames', 1)
         self.count = 0
 
         self.cam = cv2.VideoCapture('/dev/video0', cv2.CAP_V4L)
