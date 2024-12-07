@@ -21,7 +21,7 @@ class ImagePublisher(Node):
         if not self.cam.isOpened():
             raise Exception("Camera open failed!")
         self.br = CvBridge()
-        self.timer = self.create_timer(5.0, self.publish_images)
+        self.timer = self.create_timer(500.0, self.publish_images)
         print("init end")
 
     def publish_images(self):
