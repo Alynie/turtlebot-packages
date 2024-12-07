@@ -1,6 +1,6 @@
 import rclpy
 from rclpy.node import Node
-from rclpy.qos import QoSProfile
+from rclpy.qos import QoSProfile, HistoryPolicy
 from std_msgs.msg import String, Bool
 from sensor_msgs.msg import Image
 import cv2
@@ -10,12 +10,12 @@ class ImageSubscriber(Node):
     
     def __init__(self):
         super().__init__('Image_subscriber')
-        qos_profile = QoSProfile(depth=1)
+        qos_profile = QoSProfile(history=HistoryPolicy.KEEP_LAST,depth=1)
         self.image_subscriber = self.create_subscription(
             Image,
             'video_frames',
             self.listener_callback,
-            1)
+            qos_profile)
         self.br = CvBridge()
         self.count = 0
     

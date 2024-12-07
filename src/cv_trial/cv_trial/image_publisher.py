@@ -1,6 +1,6 @@
 import rclpy
 from rclpy.node import Node
-from rclpy.qos import QoSProfile
+from rclpy.qos import QoSProfile, HistoryPolicy
 from std_msgs.msg import String
 import cv2
 from cv_bridge import CvBridge
@@ -13,8 +13,8 @@ class ImagePublisher(Node):
     def __init__(self):
         super().__init__('image_publisher')
         print("init")
-        qos_profile = QoSProfile(depth = 1)
-        self.publisher = self.create_publisher(Image, 'video_frames', 1)
+        qos_profile = QoSProfile(history=HistoryPolicy.KEEP_LAST, depth = 1)
+        self.publisher = self.create_publisher(Image, 'video_frames', qos_profile)
         self.count = 0
 
         self.cam = cv2.VideoCapture('/dev/video0', cv2.CAP_V4L)
