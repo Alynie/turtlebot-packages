@@ -12,7 +12,7 @@ class Navigation(Node):
     def __init__(self):
         super().__init__('Navigation')
         qos_profile = QoSProfile(history=HistoryPolicy.KEEP_LAST,depth=1)
-        reset_timer_frequency = 2.0 #Hz
+        reset_timer = 2.0 #seconds
         
         self.image_subscriber = self.create_subscription(
             Image,
@@ -22,7 +22,7 @@ class Navigation(Node):
         self.publisher = self.create_publisher(Twist, '/cmd_vel', 10)
         self.br = CvBridge()
         self.count = 0
-        self.timer = self.create_timer(reset_timer_frequency, self.reset)
+        self.timer = self.create_timer(reset_timer, self.reset)
         self.vel_msg = Twist()
         self.gesture = "stop"
         
