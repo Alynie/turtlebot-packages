@@ -20,7 +20,7 @@ class Navigation(Node):
         self.publisher = self.create_publisher(Twist, '/cmd_vel', 10)
         self.br = CvBridge()
         self.count = 0
-        self._loop_rate = self.create_rate(1, self.get_clock()) #rate is in Hz so 1 is every second
+        self._loop_rate = self.create_rate(2, self.get_clock()) #rate is in Hz so 1 is every second
         
     def save_image(self, data):
         image_name = f"images/img{self.count}.jpg"
