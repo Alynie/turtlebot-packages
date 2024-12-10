@@ -43,10 +43,9 @@ class Navigation(Node):
         # predict
         # map gesture to movement
         # publish movement
-        while self.nav_publisher.get_num_connections() >= 1:
+        while True:
             self.forward()
             print("in move loop")
-        print("outside of loop")
 
 def main(args=None):
     print('Starting Navigation Node')
