@@ -1,4 +1,5 @@
 from setuptools import setup
+import glob, os
 
 package_name = 'final'
 
@@ -10,6 +11,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        ('share/' + 'train/', glob.glob(os.path.join('train', 'model_final.pth')))
     ],
     install_requires=['setuptools'],
     zip_safe=True,

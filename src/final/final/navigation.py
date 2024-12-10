@@ -6,13 +6,15 @@ from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist
 import cv2
 from cv_bridge import CvBridge
+from final.final.detect_gesture import Gesture
+import time
 
 class Navigation(Node):
     
     def __init__(self):
         super().__init__('Navigation')
         qos_profile = QoSProfile(history=HistoryPolicy.KEEP_LAST,depth=1)
-        reset_timer = 2.0 #seconds
+        self.sleep_time = 2
         
         self.image_subscriber = self.create_subscription(
             Image,
@@ -22,9 +24,9 @@ class Navigation(Node):
         self.publisher = self.create_publisher(Twist, '/cmd_vel', 10)
         self.br = CvBridge()
         self.count = 0
-        self.timer = self.create_timer(reset_timer, self.reset)
         self.vel_msg = Twist()
-        self.gesture = "stop"
+        self.gesture = Gesture()
+        self.result = None
         
     def save_image(self, data):
         image_name = f"images/img{self.count}.jpg"
@@ -33,6 +35,7 @@ class Navigation(Node):
         current_frame = self.br.imgmsg_to_cv2(data)
         cv2.imwrite(image_name, current_frame)
         print(f'== Saved {image_name} ==')
+        self.result = self.gesture.detect_gesture(current_frame,self.count)
         
     def forward(self):
         self.vel_msg.linear.x = 0.1 
@@ -70,20 +73,22 @@ class Navigation(Node):
         self.save_image(data)
         # predict
         # map gesture to movement
-        if self.gesture == "forward":
+        if self.result[0] == "forward":
             self.forward()
-        elif self.gesture == "backward":
+        elif self.result[0] == "backward":
             self.backward()
-        elif self.gesture == "left":
+        elif self.result[0] == "left":
             self.left()
-        elif self.gesture == "right":
+        elif self.result[0] == "right":
             self.right()
-        elif self.gesture == "stop":
+        elif self.result[0] == "stop":
             self.stop()
         else: 
             self.stop()
         # publish movement
         self.move()
+        time.sleep(self.sleep_time)
+        self.reset()
 
 def main(args=None):
     print('Starting Navigation Node')
