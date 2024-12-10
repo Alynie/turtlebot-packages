@@ -18,7 +18,7 @@ class Navigation(Node):
             'video_frames',
             self.image_callback,
             qos_profile)
-        self.nav_publisher = self.create_publisher(Twist, 'cmd_vel', 10)
+        self.nav_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
         self.count = 0
         
     def save_image(self, data):
@@ -43,9 +43,7 @@ class Navigation(Node):
         # predict
         # map gesture to movement
         # publish movement
-        while True:
-            self.forward()
-            print("in move loop")
+        self.forward()
 
 def main(args=None):
     print('Starting Navigation Node')
