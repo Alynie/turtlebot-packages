@@ -32,8 +32,8 @@ class Navigation(Node):
     def forward(self):
         vel_msg = Twist()
         
-        vel_msg.linear.x = 0.0 
-        vel_msg.angular.z = 0.1
+        vel_msg.linear.x = 0.1 
+        vel_msg.angular.z = 0.0
         
         self.publisher.publish(vel_msg)
         self.get_logger().info('Move Forward')
