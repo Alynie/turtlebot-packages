@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'subscriber'
+package_name = 'final'
 
 setup(
     name=package_name,
@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'subscriber = subscriber.subscriber:main'
+            'turtlebot = final.turtlebot:main',
+            'navigation = final.navigation:main'
         ],
     },
 )
