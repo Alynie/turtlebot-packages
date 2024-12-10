@@ -39,11 +39,11 @@ class Navigation(Node):
         self.get_logger().info('Move Forward')
     
     def image_callback(self, data):
-        self.save_image(self, data)
+        self.save_image(data)
         # predict
         # map gesture to movement
         # publish movement
-        self.forward(self)
+        self.forward()
 
 def main(args=None):
     print('Starting Navigation Node')
