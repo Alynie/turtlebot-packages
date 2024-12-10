@@ -17,7 +17,7 @@ class Navigation(Node):
             'video_frames',
             self.image_callback,
             qos_profile)
-        self.nav_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
+        self.publisher = self.create_publisher(Twist, '/cmd_vel', 10)
         self.br = CvBridge()
         self.count = 0
         
@@ -35,7 +35,7 @@ class Navigation(Node):
         vel_msg.linear.x = 0.5 
         vel_msg.angular.z = 0.0
         
-        self.nav_publisher.publish(vel_msg)
+        self.publisher.publish(vel_msg)
         self.get_logger().info('Move Forward')
     
     def image_callback(self, data):
