@@ -6,6 +6,7 @@ from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist
 import cv2
 from cv_bridge import CvBridge
+import rospy
 
 class Navigation(Node):
     
@@ -20,6 +21,8 @@ class Navigation(Node):
             qos_profile)
         self.nav_publisher = self.create_publisher(Twist, 'cmd_vel', 10)
         self.count = 0
+        rate = rospy.Rate(1)
+        vel_msg = Twist()
         
     def save_image(self, data):
         image_name = f"images/img{self.count}.jpg"
@@ -30,13 +33,12 @@ class Navigation(Node):
         print(f'== Saved {image_name} ==')
         
     def forward(self):
-        vel_msg = Twist()
-        
         vel_msg.linear.x = 0.5 
         vel_msg.angular.z = 0.0
         
         self.nav_publisher.publish(vel_msg)
         self.get_logger().info('Move Forward')
+        rate.sleep()
     
     def image_callback(self, data):
         self.save_image(data)
