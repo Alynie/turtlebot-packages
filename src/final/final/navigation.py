@@ -12,13 +12,13 @@ class Navigation(Node):
     def __init__(self):
         super().__init__('Navigation')
         qos_profile = QoSProfile(history=HistoryPolicy.KEEP_LAST,depth=1)
-        self.br = CvBridge()
         self.image_subscriber = self.create_subscription(
             Image,
             'video_frames',
             self.image_callback,
             qos_profile)
         self.nav_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
+        self.br = CvBridge()
         self.count = 0
         
     def save_image(self, data):
