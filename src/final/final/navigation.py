@@ -20,7 +20,7 @@ class Navigation(Node):
         self.publisher = self.create_publisher(Twist, '/cmd_vel', 10)
         self.br = CvBridge()
         self.count = 0
-        self._loop_rate = self.create_rate(1, self.get_clock()) #rate is in Hz so 1 is every second
+        self._loop_rate = self.create_rate(0.5, self.get_clock()) #rate is in Hz so 1 is every second
         
     def save_image(self, data):
         image_name = f"images/img{self.count}.jpg"
@@ -38,8 +38,15 @@ class Navigation(Node):
         
         self.publisher.publish(vel_msg)
         self.get_logger().info('Move Forward')
-        self._loop_rate.sleep()
-        print("after sleep")
+    
+    def stop(self):
+        vel_msg = Twist()
+        
+        vel_msg.linear.x = 0.0 
+        vel_msg.angular.z = 0.0
+        
+        self.publisher.publish(vel_msg)
+        self.get_logger().info('Stop')
     
     def image_callback(self, data):
         self.save_image(data)
@@ -47,6 +54,9 @@ class Navigation(Node):
         # map gesture to movement
         # publish movement
         self.forward()
+        self._loop_rate.sleep()
+        print("after sleep")
+        self.stop()
 
 def main(args=None):
     print('Starting Navigation Node')
