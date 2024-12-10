@@ -21,6 +21,7 @@ class Navigation(Node):
         self.br = CvBridge()
         self.count = 0
         self.timer = self.create_timer(2.0, self.stop)
+        self.vel_msg = Twist()
         
     def save_image(self, data):
         image_name = f"images/img{self.count}.jpg"
@@ -31,21 +32,17 @@ class Navigation(Node):
         print(f'== Saved {image_name} ==')
         
     def forward(self):
-        vel_msg = Twist()
+        self.vel_msg.linear.x = 0.1 
+        self.vel_msg.angular.z = 0.0
         
-        vel_msg.linear.x = 0.1 
-        vel_msg.angular.z = 0.0
-        
-        self.publisher.publish(vel_msg)
+        self.publisher.publish(self.vel_msg)
         self.get_logger().info('Move Forward')
     
     def stop(self):
-        vel_msg = Twist()
+        self.vel_msg.linear.x = 0.0 
+        self.vel_msg.angular.z = 0.0
         
-        vel_msg.linear.x = 0.0 
-        vel_msg.angular.z = 0.0
-        
-        self.publisher.publish(vel_msg)
+        self.publisher.publish(self.vel_msg)
         self.get_logger().info('Stop')
     
     def image_callback(self, data):
