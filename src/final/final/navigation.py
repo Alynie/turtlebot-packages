@@ -6,7 +6,7 @@ from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist
 import cv2
 from cv_bridge import CvBridge
-from final.final.detect_gesture import Gesture
+from final.detect_gesture import Gesture
 import time
 
 class Navigation(Node):
