@@ -16,7 +16,7 @@ class Gesture():
 
         cfg.MODEL.ROI_HEADS.NUM_CLASSES = 5
         cfg.MODEL.DEVICE='cpu'
-        cfg.MODEL.WEIGHTS = "model_final.pth"  # path to the model we just trained
+        cfg.MODEL.WEIGHTS = "mnist_model.pth"  # path to the model we just trained
         cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7   # set a custom testing threshold
         self.predictor = DefaultPredictor(cfg)
         print("=================Finish Init========================")
