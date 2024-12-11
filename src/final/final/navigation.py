@@ -14,7 +14,7 @@ class Navigation(Node):
     def __init__(self):
         super().__init__('Navigation')
         qos_profile = QoSProfile(history=HistoryPolicy.KEEP_LAST,depth=1)
-        self.sleep_time = 2
+        self.sleep_time = 5
         
         self.image_subscriber = self.create_subscription(
             Image,
@@ -89,7 +89,6 @@ class Navigation(Node):
             self.stop()
         else: 
             self.stop()
-        # publish movement
         self.move()
         time.sleep(self.sleep_time)
         self.reset()
