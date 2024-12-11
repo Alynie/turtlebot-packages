@@ -11,7 +11,7 @@ class Gesture():
         cfg = get_cfg()
         cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
         cfg.DATASETS.TRAIN = ("mdata1_train",)
-        self.metadata_train = MetadataCatalog.get("mdata1_train").set(thing_classes=["fist", "palm", "ok", "tnf", "one_finger_left", "one_finger_right", "no_gesture"])
+        self.metadata_train = MetadataCatalog.get("mdata1_train").set(thing_classes=["fist", "palm", "ok", "tnf", "one_finger_left", "one_finger_right"])
         cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")  
 
         cfg.MODEL.ROI_HEADS.NUM_CLASSES = 5
