@@ -73,15 +73,19 @@ class Navigation(Node):
         # predict
         self.save_image(data)
         # map gesture to movement
-        if self.result[0] == "forward":
+        if self.result[0] == "fist":
             self.forward()
-        elif self.result[0] == "backward":
+        elif self.result[0] == "tnf":
             self.backward()
-        elif self.result[0] == "left":
+        elif self.result[0] == "ok":
+            self.backward()
+        elif self.result[0] == "one_finger_left":
             self.left()
-        elif self.result[0] == "right":
+        elif self.result[0] == "one_finger_right":
             self.right()
-        elif self.result[0] == "stop":
+        elif self.result[0] == "palm":
+            self.stop()
+        elif self.result[0] == "no_gesture":
             self.stop()
         else: 
             self.stop()
