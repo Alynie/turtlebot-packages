@@ -70,8 +70,8 @@ class Navigation(Node):
         self.move()
     
     def image_callback(self, data):
-        self.save_image(data)
         # predict
+        self.save_image(data)
         # map gesture to movement
         if self.result[0] == "forward":
             self.forward()
