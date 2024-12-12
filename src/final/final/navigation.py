@@ -40,7 +40,7 @@ class Navigation(Node):
         msg = String()
         self.count+=1 
         current_frame = self.br.imgmsg_to_cv2(data)
-        width, height = current_frame.shape[:2]
+        height, width = current_frame.shape[:2]
         if width != 640 and height != 480:
             current_frame = cv2.resize(current_frame, (640, 480), interpolation=cv2.INTER_AREA)
             print("Resized image")
