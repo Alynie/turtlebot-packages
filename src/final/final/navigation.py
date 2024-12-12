@@ -34,10 +34,11 @@ class Navigation(Node):
         self.count+=1 
         current_frame = self.br.imgmsg_to_cv2(data)
         img_gray =cv2.cvtColor(current_frame, cv2.COLOR_BGR2GRAY)
-        img_color = cv2.applyColorMap(img_gray, cv2.COLORMAP_JET)
-        cv2.imwrite(image_name, img_color)
+        # img_color = cv2.applyColorMap(img_gray, cv2.COLORMAP_JET)
+        print(img_gray.shape)
+        cv2.imwrite(image_name, img_gray)
         print(f'== Saved {image_name} ==')
-        self.result = self.gesture.detect_gesture(img_color,self.count)
+        self.result = self.gesture.detect_gesture(img_gray,self.count)
         
     def forward(self):
         self.vel_msg.linear.x = 0.1 
