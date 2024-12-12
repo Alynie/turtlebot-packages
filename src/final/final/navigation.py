@@ -14,13 +14,13 @@ class Navigation(Node):
     
     def __init__(self):
         super().__init__('Navigation')
-        # qos_profile = QoSProfile(history=HistoryPolicy.KEEP_LAST,depth=1)
-        qos_profile = QoSProfile(
-            reliability=ReliabilityPolicy.BEST_EFFORT,
-            durability=DurabilityPolicy.TRANSIENT_LOCAL,
-            history=HistoryPolicy.KEEP_LAST,
-            depth=1
-        )
+        qos_profile = QoSProfile(history=HistoryPolicy.KEEP_LAST,depth=1)
+        # qos_profile = QoSProfile(
+        #     reliability=ReliabilityPolicy.BEST_EFFORT,
+        #     durability=DurabilityPolicy.TRANSIENT_LOCAL,
+        #     history=HistoryPolicy.KEEP_LAST,
+        #     depth=1
+        # )
         self.sleep_time = 2
         
         self.image_subscriber = self.create_subscription(
@@ -45,7 +45,7 @@ class Navigation(Node):
         #     current_frame = cv2.resize(current_frame, (640, 480), interpolation=cv2.INTER_AREA)
         #     print("Resized image")
 
-        gray =cv2.cvtColor(current_frame, cv2.COLOR_BGR2GRAY)
+        gray = cv2.cvtColor(current_frame, cv2.COLOR_BGR2GRAY)
         img_gray = np.zeros_like(current_frame)
         img_gray[:,:,0] = gray
         img_gray[:,:,1] = gray

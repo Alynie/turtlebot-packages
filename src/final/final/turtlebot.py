@@ -16,13 +16,13 @@ class Turtlebot(Node):
         timer_period = 2.0
         
         print("== Starting Turtlebot Node ==")
-        qos_profile = QoSProfile(
-            reliability=ReliabilityPolicy.BEST_EFFORT,
-            durability=DurabilityPolicy.TRANSIENT_LOCAL,
-            history=HistoryPolicy.KEEP_LAST,
-            depth=1
-        )
-        # qos_profile = QoSProfile(history=HistoryPolicy.KEEP_LAST, depth = 1)
+        # qos_profile = QoSProfile(
+        #     reliability=ReliabilityPolicy.BEST_EFFORT,
+        #     durability=DurabilityPolicy.TRANSIENT_LOCAL,
+        #     history=HistoryPolicy.KEEP_LAST,
+        #     depth=1
+        # )
+        qos_profile = QoSProfile(history=HistoryPolicy.KEEP_LAST, depth = 1)
         self.publisher = self.create_publisher(Image, 'video_frames', qos_profile)
         self.count = 0
 
