@@ -41,8 +41,8 @@ class Navigation(Node):
         self.count+=1 
         current_frame = self.br.imgmsg_to_cv2(data)
         height, width = current_frame.shape[:2]
-        if height != 480 and width != 640:
-            current_frame = cv2.resize(current_frame, (480, 640), interpolation=cv2.INTER_AREA)
+        if width != 640 and height != 480:
+            current_frame = cv2.resize(current_frame, (640, 480), interpolation=cv2.INTER_AREA)
             print("Resized image")
 
         gray =cv2.cvtColor(current_frame, cv2.COLOR_BGR2GRAY)
