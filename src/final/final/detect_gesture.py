@@ -56,3 +56,4 @@ class Gesture():
         return (class_name, class_index)
 
         # return outputs["instances"].pred_classes
+#cv2.resize
