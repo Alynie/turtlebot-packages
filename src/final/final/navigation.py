@@ -14,7 +14,7 @@ class Navigation(Node):
     def __init__(self):
         super().__init__('Navigation')
         qos_profile = QoSProfile(history=HistoryPolicy.KEEP_LAST,depth=1)
-        self.sleep_time = 5
+        self.sleep_time = 2
         
         self.image_subscriber = self.create_subscription(
             Image,
@@ -73,11 +73,11 @@ class Navigation(Node):
         # predict
         self.save_image(data)
         # map gesture to movement
-        if self.result[0] == "fist":
+        if self.result[0] == "ok":
             self.forward()
-        elif self.result[0] == "tnf":
+        elif self.result[0] == "fist":
             self.backward()
-        elif self.result[0] == "ok":
+        elif self.result[0] == "tnf":
             self.backward()
         elif self.result[0] == "one_finger_left":
             self.left()
@@ -90,8 +90,8 @@ class Navigation(Node):
         else: 
             self.stop()
         self.move()
-        # time.sleep(self.sleep_time)
-        # self.reset()
+        time.sleep(self.sleep_time)
+        self.reset()
 
 def main(args=None):
     print('Starting Navigation Node')
