@@ -8,6 +8,7 @@ import cv2
 from cv_bridge import CvBridge
 from final.detect_gesture import Gesture
 import time
+import numpy as np
 
 class Navigation(Node):
     
@@ -33,7 +34,11 @@ class Navigation(Node):
         msg = String()
         self.count+=1 
         current_frame = self.br.imgmsg_to_cv2(data)
-        img_gray =cv2.cvtColor(current_frame, cv2.COLOR_BGR2GRAY)
+        gray =cv2.cvtColor(current_frame, cv2.COLOR_BGR2GRAY)
+        img_gray = np.zeros_like(current_frame)
+        img_gray[:,:,0] = gray
+        img_gray[:,:,1] = gray
+        img_gray[:,:,2] = gray
         # img_color = cv2.applyColorMap(img_gray, cv2.COLORMAP_JET)
         print(img_gray.shape)
         cv2.imwrite(image_name, img_gray)
