@@ -1,6 +1,6 @@
 import rclpy
 from rclpy.node import Node
-from rclpy.qos import QoSProfile, HistoryPolicy
+from rclpy.qos import QoSProfile, HistoryPolicy, DurabilityPolicy, ReliabilityPolicy
 from std_msgs.msg import String, Bool
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist
@@ -14,7 +14,13 @@ class Navigation(Node):
     
     def __init__(self):
         super().__init__('Navigation')
-        qos_profile = QoSProfile(history=HistoryPolicy.KEEP_LAST,depth=1)
+        # qos_profile = QoSProfile(history=HistoryPolicy.KEEP_LAST,depth=1)
+        qos_profile = QoSProfile(
+            reliability=ReliabilityPolicy.BEST_EFFORT,
+            durability=DurabilityPolicy.TRANSIENT_LOCAL,
+            history=HistoryPolicy.KEEP_LAST,
+            depth=1
+        )
         self.sleep_time = 2
         
         self.image_subscriber = self.create_subscription(
