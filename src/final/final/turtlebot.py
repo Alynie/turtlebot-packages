@@ -13,7 +13,7 @@ class Turtlebot(Node):
     def __init__(self):
         super().__init__('turtlebot')
         
-        timer_period = 10.0
+        timer_period = 2.0
         
         print("== Starting Turtlebot Node ==")
         qos_profile = QoSProfile(history=HistoryPolicy.KEEP_LAST, depth = 1)
