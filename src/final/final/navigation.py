@@ -34,12 +34,16 @@ class Navigation(Node):
         msg = String()
         self.count+=1 
         current_frame = self.br.imgmsg_to_cv2(data)
+        height, width = current_frame.shape[:2]
+        if height != 1080 and width != 720:
+            current_frame = cv2.resize(current_frame, (1080, 720), interpolation=cv2.INTER_AREA)
+            print("Resized image")
+
         gray =cv2.cvtColor(current_frame, cv2.COLOR_BGR2GRAY)
         img_gray = np.zeros_like(current_frame)
         img_gray[:,:,0] = gray
         img_gray[:,:,1] = gray
         img_gray[:,:,2] = gray
-        # img_color = cv2.applyColorMap(img_gray, cv2.COLORMAP_JET)
         print(img_gray.shape)
         cv2.imwrite(image_name, img_gray)
         print(f'== Saved {image_name} ==')
