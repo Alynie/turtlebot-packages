@@ -1,0 +1,1 @@
+The file `95percentBW.pth` is too large to put in github, so you will need to download that file and put it in this folder on the remote PC

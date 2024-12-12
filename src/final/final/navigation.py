@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
-from rclpy.qos import QoSProfile, HistoryPolicy, DurabilityPolicy, ReliabilityPolicy
-from std_msgs.msg import String, Bool
+from rclpy.qos import QoSProfile, HistoryPolicy
+from std_msgs.msg import String
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist
 import cv2
@@ -15,12 +15,6 @@ class Navigation(Node):
     def __init__(self):
         super().__init__('Navigation')
         qos_profile = QoSProfile(history=HistoryPolicy.KEEP_LAST,depth=1)
-        # qos_profile = QoSProfile(
-        #     reliability=ReliabilityPolicy.BEST_EFFORT,
-        #     durability=DurabilityPolicy.TRANSIENT_LOCAL,
-        #     history=HistoryPolicy.KEEP_LAST,
-        #     depth=1
-        # )
         self.sleep_time = 2
         
         self.image_subscriber = self.create_subscription(
@@ -51,7 +45,7 @@ class Navigation(Node):
         img_gray[:,:,1] = gray
         img_gray[:,:,2] = gray
         print(img_gray.shape)
-        cv2.imwrite(image_name, img_gray)
+        cv2.imwrite(image_name, img_gray) #comment if you don't want to save file
         print(f'== Saved {image_name} ==')
         self.result = self.gesture.detect_gesture(img_gray,self.count)
         
