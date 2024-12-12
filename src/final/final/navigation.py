@@ -90,8 +90,8 @@ class Navigation(Node):
         else: 
             self.stop()
         self.move()
-        time.sleep(self.sleep_time)
-        self.reset()
+        # time.sleep(self.sleep_time)
+        # self.reset()
 
 def main(args=None):
     print('Starting Navigation Node')
