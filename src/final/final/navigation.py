@@ -2,7 +2,7 @@ import rclpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, HistoryPolicy
 from std_msgs.msg import String
-from sensor_msgs.msg import Image
+from sensor_msgs.msg import Image, String
 from geometry_msgs.msg import Twist
 import cv2
 from cv_bridge import CvBridge
@@ -22,6 +22,7 @@ class Navigation(Node):
             'video_frames',
             self.image_callback,
             qos_profile)
+        self.camera_flag_publisher = self.create_publisher(String, 'working_flag', qos_profile)
         self.publisher = self.create_publisher(Twist, '/cmd_vel', 10)
         self.br = CvBridge()
         self.count = 0
@@ -82,6 +83,9 @@ class Navigation(Node):
         self.move()
     
     def image_callback(self, data):
+        msg = String()
+        msg.data = "Disable"
+        self.camera_flag_publisher.publish(msg)
         # predict
         self.save_image(data)
         # map gesture to movement
@@ -101,9 +105,14 @@ class Navigation(Node):
             self.stop()
         else: 
             self.stop()
-        self.move()
-        time.sleep(self.sleep_time)
-        self.reset()
+        
+        if not self.result[0] == None:
+            msg.data = self.result[0]
+            self.move()
+            time.sleep(self.sleep_time)
+            self.reset()
+        msg.data = "Enable"
+        self.camera_flag_publisher.publish(msg)
 
 def main(args=None):
     print('Starting Navigation Node')
