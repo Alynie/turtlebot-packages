@@ -89,6 +89,9 @@ class Navigation(Node):
         # predict
         self.save_image(data)
         # map gesture to movement
+        
+        print("self result", self.result)
+        print("selfresult[0]", self.result[0])
         if self.result[0] == "ok":
             self.forward()
         elif self.result[0] == "fist":
@@ -105,8 +108,6 @@ class Navigation(Node):
             self.stop()
         else: 
             self.stop()
-        print("Moving robot...")
-        self.get_logger().info('Moooooove')
         self.move()
         time.sleep(self.sleep_time)
         msg.data = "Enable"
