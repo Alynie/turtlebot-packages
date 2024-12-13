@@ -36,3 +36,25 @@ class Gesture():
             class_name = self.metadata_train.thing_classes[class_index]
             print(class_name, class_index)
         return (class_name, class_index)
+    
+    def detect_gestures(self,img,id):
+        outputs = self.predictor(img)
+        print('==========',id,'============')
+        print(outputs["instances"].pred_classes)
+        print(outputs["instances"].pred_boxes)
+        
+        instances = outputs["instances"]
+        
+        if len(instances) > 0:
+            pred_classes_list = instances.pred_classes.tolist()
+            pred_scores = instances.scores.tolist()
+            best_score_idx = pred_scores.index(max(pred_scores))
+            best_class = pred_classes_list[best_score_idx]
+            best_score = pred_scores[best_score_idx]
+            pred_class = best_class
+        else:
+            pred_class = 6
+            
+        class_name = self.metadata_train.thing_classes[pred_class]
+        
+        return (class_name, pred_class)

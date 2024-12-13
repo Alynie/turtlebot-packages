@@ -48,7 +48,7 @@ class Navigation(Node):
         print(img_gray.shape)
         cv2.imwrite(image_name, img_gray) #comment if you don't want to save file
         print(f'== Saved {image_name} ==')
-        self.result = self.gesture.detect_gesture(img_gray,self.count)
+        self.result = self.gesture.detect_gestures(img_gray,self.count)
         
     def forward(self):
         self.vel_msg.linear.x = 0.1 
