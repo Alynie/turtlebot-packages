@@ -31,6 +31,7 @@ class Navigation(Node):
         self.result = None
         
     def save_image(self, data):
+        cv2.destroyAllWindows()
         image_name = f"images/img{self.count}.jpg"
         msg = String()
         self.count+=1 
@@ -48,6 +49,7 @@ class Navigation(Node):
         print(img_gray.shape)
         cv2.imwrite(image_name, img_gray) #comment if you don't want to save file
         print(f'== Saved {image_name} ==')
+        cv2.imshow(image_name, img_gray)
         self.result = self.gesture.detect_gesture(img_gray,self.count)
         
     def forward(self):
@@ -124,6 +126,7 @@ def main(args=None):
     except KeyboardInterrupt:
         node.get_logger().info('Keyboard Interrupt (SIGINT)')
     finally:
+        cv2.destroyAllWindows()
         node.reset()
         node.destroy_node()
         rclpy.shutdown()
