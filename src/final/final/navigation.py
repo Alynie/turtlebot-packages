@@ -15,7 +15,7 @@ class Navigation(Node):
     def __init__(self):
         super().__init__('Navigation')
         qos_profile = QoSProfile(history=HistoryPolicy.KEEP_LAST,depth=1)
-        self.sleep_time = 2
+        self.sleep_time = 3
         
         self.image_subscriber = self.create_subscription(
             Image,
@@ -51,23 +51,28 @@ class Navigation(Node):
         self.result = self.gesture.detect_gestures(img_gray,self.count)
         
     def forward(self):
-        self.vel_msg.linear.x = 0.1 
+        self.vel_msg.linear.x = 0.2 
         self.vel_msg.angular.z = 0.0
         self.get_logger().info('Move Forward')
     
     def backward(self):
-        self.vel_msg.linear.x = -0.1 
+        self.vel_msg.linear.x = -0.2 
         self.vel_msg.angular.z = 0.0
         self.get_logger().info('Move Backward')
         
     def left(self):
         self.vel_msg.linear.x = 0.0
-        self.vel_msg.angular.z = 0.1
+        self.vel_msg.angular.z = 0.5
+        self.get_logger().info('Turn Left')
+        
+    def uturn(self):
+        self.vel_msg.linear.x = 0.0
+        self.vel_msg.angular.z = 0.9
         self.get_logger().info('Turn Left')
         
     def right(self):
         self.vel_msg.linear.x = 0.0 
-        self.vel_msg.angular.z = -0.1
+        self.vel_msg.angular.z = -0.5
         self.get_logger().info('Turn Right')
     
     def stop(self):
@@ -97,7 +102,7 @@ class Navigation(Node):
         elif self.result[0] == "fist":
             self.backward()
         elif self.result[0] == "tnf":
-            self.backward()
+            self.uturn()
         elif self.result[0] == "one_finger_left":
             self.left()
         elif self.result[0] == "one_finger_right":
