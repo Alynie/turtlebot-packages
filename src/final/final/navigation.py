@@ -105,13 +105,14 @@ class Navigation(Node):
             self.stop()
         else: 
             self.stop()
-        
         print("Moving robot...")
+        self.get_logger().info('Moooooove')
         self.move()
         time.sleep(self.sleep_time)
         msg.data = "Enable"
         self.camera_flag_publisher.publish(msg)
         self.reset()
+        self.get_logger().info('Reset')
 
 def main(args=None):
     print('Starting Navigation Node')
