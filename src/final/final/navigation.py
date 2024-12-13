@@ -2,7 +2,7 @@ import rclpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, HistoryPolicy
 from std_msgs.msg import String
-from sensor_msgs.msg import Image, String
+from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist
 import cv2
 from cv_bridge import CvBridge
