@@ -106,8 +106,9 @@ class Navigation(Node):
         else: 
             self.stop()
         
-        if not self.result[0] == None:
+        if self.result[0] != None:
             msg.data = self.result[0]
+            print("Moving robot...")
             self.move()
             time.sleep(self.sleep_time)
             self.reset()
