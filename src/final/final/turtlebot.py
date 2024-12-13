@@ -44,7 +44,7 @@ class Turtlebot(Node):
             return
         self.get_logger().info('***********image published***********')
         
-        self.camera_publisher.publish(self.br.cv2_to_imgmsg(self.latest_frame, encoding="bgr8"))
+        self.publisher.publish(self.br.cv2_to_imgmsg(self.latest_frame, encoding="bgr8"))
     
     
     def get_latest_frame(self):
