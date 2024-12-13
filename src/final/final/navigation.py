@@ -67,8 +67,8 @@ class Navigation(Node):
         
     def uturn(self):
         self.vel_msg.linear.x = 0.0
-        self.vel_msg.angular.z = 0.9
-        self.get_logger().info('Turn Left')
+        self.vel_msg.angular.z = 1.1
+        self.get_logger().info('U-Turn')
         
     def right(self):
         self.vel_msg.linear.x = 0.0 
