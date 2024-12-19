@@ -1,0 +1,33 @@
+*Regarding Communication between Turtlebot and Remote PC*
+1. Publisher and subscriber were both running properly on the turtlebot or on the remote PC, but they were not communicating with each other.
+   Each publisher or subscriber was creating a new topic, /topic, that was unique to the remote PC or the turtlebot and not seen by the other.
+   Solution: move from a personal laptop running WSL to the Linux machine provided in the lab.  WSL had worked up to this point (including teleop) but it didn't work for subscriber and publisher interaction.
+2. Large delay between when an object is placed in front of the camera and the subscriber receiving a photo with that object in it (latency) (measured in number of images sent before object seen in subscriber)
+   Initally, we were publishing once a second and it took 11 images sent to the subscriber before the subscriber showed the change.
+   Solution: Tirst we implemented a 5 second publiser timer instead of a 1 second timer, which cut down the delay to 8 images.
+             Second, the working_flag from the cat folder was added which suspended publishing while an image was being assessed by the model by sending a string from the subscriber to the publisher. 
+               This made it 5 images delay instead of 8.
+             Third, we added in a time.sleep call for the approximate time the robot to move (~2 seconds) so the robot would only send an image after moving.  This further cut down the delay to 1 or 2 images.
+
+*Regarding Model Development* - all issues were resolved in code in the model_training folder
+1. KR and US robots calibrated with different camera resolutions
+   Solution: rescale all images if needed before training and before inference to the smaller resolution (640x480 px)
+2. KR and US images were taken with vastly different backgrounds and heights, which would lead to poor performance or overfitting
+   Solution: Adding in random brightness, contrast, blur to regularize the lighting
+             Created three different datasets that were all tested that had different amounts of color in them to experimentally see if the data was dependent on the background conditions
+             This resulted in a black and white dataset outperforming the color dataset along with a binary colored edge detection dataset, showing that some features are important to maintain from the original image, 
+             but that color leads to poor results and also a completely binary image with no gray in it does not have enough data in it to accurately classify.
+3. Detectron2 training requires GPU support (can't use free CPUs), which on Colab during the workweek is always at capacity and not available to free users.
+   Solution: purchased Colab Pro for $9.99 for one month for 100 compute units (more than enough, used ~20) and more importantly priority access to GPUs
+4. Model did not originally load in properly from weights - it all appeared to, but the confusion matrix showed that the model was only guessing despite the model proving in the training Notebook it was very accurate.
+   Solution: I was not originally loading in the validation dataset (model had not seen before) as a DatasetCatalog and MetadataCatalog object.  This can be seen in Model_Validation.ipynb.
+
+*Regarding Robot Movement and Control*
+1. Model sometimes sends the same gesture twice
+   Solution: implemented latency improvements discussed in issue 2 of communication with Turtlebot and Remote PC
+2. Robot didn't always move the same amount in a given angular direction
+   Solution: this was due to poor grip on the lab floor. Wheels should be cleaned up.
+3. Robot misclassifies the image
+   Solution: this was because my hand was either too close to the robot or not fully in frame of the camera.  It is really hard to tell how far and at what height to put your hand.
+             The model was trained on image data with gestures located far away, so recommend placing hand gesture further away from the camera to ensure hand is fully in frame 
+             Also recommend waiting a little bit after the robot moves to ensure the subscriber has cleared its queue before giving it another gesture.
